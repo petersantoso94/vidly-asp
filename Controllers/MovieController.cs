@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using vidly.Data;
@@ -8,6 +9,7 @@ using vidly.ViewModels;
 
 namespace vidly.Controllers
 {
+    [Authorize]
     [Route("movie")]
     public class MovieController : Controller
     {
