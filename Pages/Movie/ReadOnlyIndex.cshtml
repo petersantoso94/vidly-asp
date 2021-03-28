@@ -1,0 +1,36 @@
+@using Microsoft.AspNetCore
+@using vidly.Models.View
+@{
+    ViewBag.Title = "Movie";
+}
+
+<table class="table table-bordered table-hover" id="movie">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+<script>
+    $(document).ready(() => {
+        //initiate datatable
+        const movieDt = $("#movie").DataTable({
+            ajax:{
+                url:"api/movie",
+                dataSrc:""
+            },
+            columns:[
+                {
+                    data: "name"
+                },
+                {
+                    data: "genre.name"
+                }
+            ]
+        });
+    })
+</script>
+}

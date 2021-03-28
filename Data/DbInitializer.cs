@@ -29,36 +29,36 @@ namespace vidly.Data
                 context.SaveChanges();
             }
 
-            if (!context.Roles.Any(r => r.Name == "CanManageMovies"))
+            if (!context.Roles.Any(r => r.Name == CUserRole.MovieManager()))
             {
                 roleManager.CreateAsync(new IdentityRole
                 {
-                    Name = "CanManageMovies",
-                    NormalizedName = "CANMANAGEMOVIES"
+                    Name = CUserRole.MovieManager(),
+                    NormalizedName = CUserRole.NormalizedMovieManager()
                 }).Wait();
             }
 
-            if (!context.Roles.Any(r => r.Name == "CanManageCustomer"))
+            if (!context.Roles.Any(r => r.Name == CUserRole.CustomerManager()))
             {
                 roleManager.CreateAsync(new IdentityRole
                 {
-                    Name = "CanManageCustomer",
-                    NormalizedName = "CANMANAGECUSTOMER"
+                    Name = CUserRole.CustomerManager(),
+                    NormalizedName = CUserRole.NormalizedCustomerManager()
                 }).Wait();
             }
 
             if (!context.Users.Any(r => r.Email == "manager@movie"))
             {
-                var user = new IdentityUser { Email = "manager@movie", UserName = "manager@movie" };
+                var user = new IdentityUser { Email = "manager@movie", UserName = "manager@movie", EmailConfirmed = true };
                 userManager.CreateAsync(user, "Manager123!").Wait();
-                userManager.AddToRoleAsync(user, "CanManageMovies").Wait();
+                userManager.AddToRoleAsync(user, CUserRole.MovieManager()).Wait();
             }
 
             if (!context.Users.Any(r => r.Email == "manager@customer"))
             {
-                var user = new IdentityUser { Email = "manager@customer", UserName = "manager@customer" };
+                var user = new IdentityUser { Email = "manager@customer", UserName = "manager@customer", EmailConfirmed = true };
                 userManager.CreateAsync(user, "Manager123!").Wait();
-                userManager.AddToRoleAsync(user, "CanManageCustomer").Wait();
+                userManager.AddToRoleAsync(user, CUserRole.CustomerManager()).Wait();
             }
             return; // db already seeded            
         }

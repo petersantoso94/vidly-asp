@@ -21,7 +21,9 @@ namespace vidly.Controllers
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            return View("~/Pages/Movie/Index.cshtml");
+            if (User.IsInRole(CUserRole.MovieManager()))
+                return View("~/Pages/Movie/Index.cshtml");
+            return View("~/Pages/Movie/ReadOnlyIndex.cshtml");
         }
         [Route("detail/{id:int}")]
         public async Task<IActionResult> Detail(int id)
