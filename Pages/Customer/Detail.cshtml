@@ -1,0 +1,19 @@
+@model vidly.Models.Customer;
+@{
+    ViewBag.Title = "Detail";
+}
+@if (Model == null)
+{
+    <div>Detail is empty</div>
+}
+else
+{
+    <div>@Model.Name</div>
+    <ul>
+        <li>MembershipType: @Model.MembershipType.Name</li>
+        @if (!string.IsNullOrWhiteSpace(Model.Birthdate.ToString()))
+        {
+            <li>Birthdate: @Model.Birthdate</li>
+        }
+    </ul>
+}

@@ -1,0 +1,22 @@
+@model vidly.Models.Movie
+@{
+    ViewBag.Title = "Detail";
+}
+@{
+    List<string> listOfDetailProperties = new List<string> { "ReleaseDate", "UpdatedDate", "CreatedDate" };
+}
+@if (Model == null)
+{
+    <div>Detail is empty</div>
+}
+else
+{
+    <div>@Model.Name</div>
+    <ul>
+        @foreach (var prop in listOfDetailProperties)
+        {
+            <li>@prop : @Model.GetType().GetProperty(prop).GetValue(Model)</li>
+        }
+        <li>Genre: @Model.Genre.Name</li>
+    </ul>
+}

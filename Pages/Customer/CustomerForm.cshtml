@@ -1,0 +1,41 @@
+@model vidly.ViewModels.CustomerFormViewModel
+@{
+    var isAdd = Model.Customer == null || Model.Customer.Id == 0;
+    var actionName = isAdd ? "Create" : "Edit";
+    ViewData["Title"] =  $"{actionName} Customer";
+}
+
+<h2>@actionName</h2>
+
+@using (Html.BeginForm("Save", "Customer"))
+{
+    @Html.ValidationSummary()
+    @if(actionName == "Edit"){
+        @Html.HiddenFor(m=>m.Customer.Id)
+    }
+    <div class="form-group">
+        @Html.LabelFor(m=>m.Customer.Name)
+        @Html.TextBoxFor(m=>m.Customer.Name,new { @class = "form-control"})
+        @Html.ValidationMessageFor(m=>m.Customer.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m=>m.Customer.Birthdate)
+        @Html.TextBoxFor(m=>m.Customer.Birthdate, "{0:d MMM yyyy}",new { @class = "form-control"})
+        @Html.ValidationMessageFor(message=>message.Customer.Birthdate)
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m=>m.Customer.IsSubscribedToNewsletter) Is Subscribed to Newsletter?
+        </label>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m=>m.Customer.MembershipTypeId)
+        @Html.DropDownListFor(m=>m.Customer.MembershipTypeId, new SelectList(Model.MembershipType,"Id","Name"),"Select Membership", new { @class = "form-control"})
+        @Html.ValidationMessageFor(m=>m.Customer.MembershipTypeId)
+    </div>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">@actionName</button>
+}
+@section Scripts{
+    @{ Html.RenderPartial("_ValidationScriptsPartial"); }
+}
